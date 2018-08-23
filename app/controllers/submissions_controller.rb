@@ -1,6 +1,11 @@
 class SubmissionsController < ApplicationController
   def index
     @submissions = Submission.all
+    @location_hash = Gmaps4rails.build_markers(@submissions.where.not(:csv_attachment_latitude => nil)) do |submission, marker|
+      marker.lat submission.csv_attachment_latitude
+      marker.lng submission.csv_attachment_longitude
+      marker.infowindow "<h5><a href='/submissions/#{submission.id}'>#{submission.created_at}</a></h5><small>#{submission.csv_attachment_formatted_address}</small>"
+    end
 
     render("submissions/index.html.erb")
   end
