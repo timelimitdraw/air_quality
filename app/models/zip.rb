@@ -5,4 +5,6 @@ class Zip < ApplicationRecord
 
   # Validations
 
+  validates :zip_code, :length => { :minimum => 5, :maximum => 5 }
+
 end
