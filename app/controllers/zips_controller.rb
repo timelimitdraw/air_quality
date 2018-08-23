@@ -1,6 +1,6 @@
 class ZipsController < ApplicationController
   def index
-    @zips = Zip.all
+    @zips = Zip.page(params[:page]).per(10)
 
     render("zips/index.html.erb")
   end

@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   def index
-    @submissions = Submission.all
+    @submissions = Submission.page(params[:page]).per(10)
     @location_hash = Gmaps4rails.build_markers(@submissions.where.not(:csv_attachment_latitude => nil)) do |submission, marker|
       marker.lat submission.csv_attachment_latitude
       marker.lng submission.csv_attachment_longitude
