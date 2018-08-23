@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+  # Routes for the Submission resource:
+  # CREATE
+  get "/submissions/new", :controller => "submissions", :action => "new"
+  post "/create_submission", :controller => "submissions", :action => "create"
+
+  # READ
+  get "/submissions", :controller => "submissions", :action => "index"
+  get "/submissions/:id", :controller => "submissions", :action => "show"
+
+  # UPDATE
+  get "/submissions/:id/edit", :controller => "submissions", :action => "edit"
+  post "/update_submission/:id", :controller => "submissions", :action => "update"
+
+  # DELETE
+  get "/delete_submission/:id", :controller => "submissions", :action => "destroy"
+  #------------------------------
+
   # Routes for the Zip resource:
   # CREATE
   get "/zips/new", :controller => "zips", :action => "new"
