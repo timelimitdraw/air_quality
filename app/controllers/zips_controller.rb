@@ -1,6 +1,7 @@
 class ZipsController < ApplicationController
   def index
-    @zips = Zip.page(params[:page]).per(10)
+    @q = Zip.ransack(params[:q])
+    @zips = @q.result(:distinct => true).page(params[:page]).per(10)
 
     render("zips/index.html.erb")
   end
