@@ -13,7 +13,13 @@
       </dd>
 
       <dt>User</dt>
-      <dd><%= @submission.user_id %></dd>
+      <dd>
+        <% if @submission.user.present? %>
+          <a href="/users/<%= @submission.user_id %>">
+            <%= @submission.user.email %>
+          </a>
+        <% end %>
+      </dd>
 
     </dl>
 
@@ -21,12 +27,14 @@
       <a href="/submissions" class="btn btn-primary">
         Back
       </a>
-      <a href="/submissions/<%= @submission.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_submission/<%= @submission.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
+      <% if current_user == @submission.user %>
+        <a href="/submissions/<%= @submission.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_submission/<%= @submission.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+      <% end %>
     </div>
   </div>
 </div>

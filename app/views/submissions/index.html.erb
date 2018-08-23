@@ -9,18 +9,6 @@
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
-  <%= f.label :user_id, "User" %>
-  <div class="row">
-    <div class='col-md-6 mb-1'>
-      <%= f.text_field :user_id_gteq, :class => "form-control", :placeholder => "User greater than or equal to" %>
-    </div>
-    <div class='col-md-6'>
-      <%= f.text_field :user_id_lteq, :class => "form-control", :placeholder => "User less than or equal to" %>
-    </div>
-  </div>
-</div>
-
-<div class="form-group">
           <%= f.label :created_at, "Created at" %>
           <div class="row">
             <div class='col-md-6 mb-1'>
@@ -60,7 +48,10 @@
           });
       </script>
 
-        
+        <div class="form-group">
+      <%= f.label :user_email_cont, "User email contains" %>
+      <%= f.text_field :user_email_cont, :class => "form-control", :placeholder => "User email contains" %>
+    </div>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
 
@@ -93,11 +84,20 @@
       <% @submissions.each do |submission| %>
       <tr>
         <td><%= submission.csv_attachment %></td>
-        <td><%= submission.user_id %></td>
+        <td>
+          <% if submission.user.present? %>
+            <a href="/users/<%= submission.user.id %>">
+              <%= submission.user.email %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/submissions/<%= submission.id %>" class="btn btn-primary">Show</a>
-          <a href="/submissions/<%= submission.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_submission/<%= submission.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          
+          <% if current_user == submission.user %>
+            <a href="/submissions/<%= submission.id %>/edit" class="btn btn-warning">Edit</a>
+            <a href="/delete_submission/<%= submission.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          <% end %>
         </td>
       </tr>
       <% end %>

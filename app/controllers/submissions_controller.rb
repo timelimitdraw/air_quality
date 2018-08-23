@@ -1,7 +1,17 @@
 class SubmissionsController < ApplicationController
+  before_action :current_user_must_be_submission_user, :only => [:show, :edit, :update, :destroy]
+
+  def current_user_must_be_submission_user
+    submission = Submission.find(params[:id])
+
+    unless current_user == submission.user
+      redirect_to :back, :alert => "You are not authorized for that."
+    end
+  end
+
   def index
-    @q = Submission.ransack(params[:q])
-    @submissions = @q.result(:distinct => true).page(params[:page]).per(10)
+    @q = current_user.submissions.ransack(params[:q])
+    @submissions = @q.result(:distinct => true).includes(:user).page(params[:page]).per(10)
     @location_hash = Gmaps4rails.build_markers(@submissions.where.not(:csv_attachment_latitude => nil)) do |submission, marker|
       marker.lat submission.csv_attachment_latitude
       marker.lng submission.csv_attachment_longitude

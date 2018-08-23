@@ -1,7 +1,17 @@
 class ZipsController < ApplicationController
+  before_action :current_user_must_be_zip_user, :only => [:show, :edit, :update, :destroy]
+
+  def current_user_must_be_zip_user
+    zip = Zip.find(params[:id])
+
+    unless current_user == zip.user
+      redirect_to :back, :alert => "You are not authorized for that."
+    end
+  end
+
   def index
-    @q = Zip.ransack(params[:q])
-    @zips = @q.result(:distinct => true).page(params[:page]).per(10)
+    @q = current_user.zips.ransack(params[:q])
+    @zips = @q.result(:distinct => true).includes(:user).page(params[:page]).per(10)
 
     render("zips/index.html.erb")
   end
@@ -48,8 +58,6 @@ class ZipsController < ApplicationController
 
   def update
     @zip = Zip.find(params[:id])
-
-    @zip.user_id = params[:user_id]
     @zip.zip_code = params[:zip_code]
 
     save_status = @zip.save

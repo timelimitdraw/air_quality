@@ -1,6 +1,12 @@
 class User < ApplicationRecord
   # Direct associations
 
+  has_many   :zips,
+             :dependent => :destroy
+
+  has_many   :submissions,
+             :dependent => :destroy
+
   # Indirect associations
 
   # Validations
