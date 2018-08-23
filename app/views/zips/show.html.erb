@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h3>Zip #<%= @zip.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>User</dt>
+      <dd><%= @zip.user_id %></dd>
+
+      <dt>Zip code</dt>
+      <dd><%= @zip.zip_code %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/zips" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/zips/<%= @zip.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_zip/<%= @zip.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

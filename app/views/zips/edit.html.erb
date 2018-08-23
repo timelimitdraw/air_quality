@@ -1,0 +1,46 @@
+<!-- Validation failure messages -->
+<% if @zip.errors.any? %>
+  <% @zip.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Zip #<%= @zip.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_zip/<%= @zip.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @zip.user_id %>">
+      </div>
+
+      <!-- Label and input for zip_code -->
+      <div class="form-group">
+        <label for="zip_code" class="control-label">
+          Zip code
+        </label>
+
+        <input type="text" id="zip_code" name="zip_code" placeholder="Zip code" class="form-control" value="<%= @zip.zip_code %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Zip
+      </button>
+      or
+      <a href="/zips/<%= @zip.id %>">Cancel</a>
+    </form>
+  </div>
+</div>
