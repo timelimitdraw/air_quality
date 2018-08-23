@@ -21,6 +21,8 @@ class Submission < ApplicationRecord
   end
   # Direct associations
 
+  belongs_to :user
+
   # Indirect associations
 
   # Validations

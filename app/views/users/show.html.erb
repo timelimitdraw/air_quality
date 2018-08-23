@@ -20,3 +20,69 @@
     </div>
   </div>
 </div>
+
+<!-- A User has many submissions -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Submissions
+      </li>
+
+      <% @user.submissions.each do |submission| %>
+        <li class="list-group-item">
+          <a href="/submissions/<%= submission.id %>">
+            <%= submission.created_at %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/submissions/<%= submission.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <%if current_user == submission.user %>
+              <a href="/submissions/<%= submission.id %>/edit" class="btn btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+              <a href="/delete_submission/<%= submission.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<!-- A User has many zips -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Zips
+      </li>
+
+      <% @user.zips.each do |zip| %>
+        <li class="list-group-item">
+          <a href="/zips/<%= zip.id %>">
+            <%= zip.zip_code %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/zips/<%= zip.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <%if current_user == zip.user %>
+              <a href="/zips/<%= zip.id %>/edit" class="btn btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+              <a href="/delete_zip/<%= zip.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

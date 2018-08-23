@@ -6,7 +6,13 @@
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>User</dt>
-      <dd><%= @zip.user_id %></dd>
+      <dd>
+        <% if @zip.user.present? %>
+          <a href="/users/<%= @zip.user_id %>">
+            <%= @zip.user.email %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Zip code</dt>
       <dd><%= @zip.zip_code %></dd>
@@ -17,12 +23,14 @@
       <a href="/zips" class="btn btn-primary">
         Back
       </a>
-      <a href="/zips/<%= @zip.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_zip/<%= @zip.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
+      <% if current_user == @zip.user %>
+        <a href="/zips/<%= @zip.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_zip/<%= @zip.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+      <% end %>
     </div>
   </div>
 </div>
